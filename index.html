@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePro-Desk - Mantenimiento y Reparación de Computadoras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f172a',
+                        secondary: '#1e293b',
+                        accent: '#3b82f6',
+                        accentHover: '#2563eb',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        .service-icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .pricing-featured {
+            border: 2px solid #3b82f6;
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #3b82f6;
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .process-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+            z-index: 0;
+        }
+        @media (max-width: 768px) {
+            .process-line {
+                display: none;
+            }
+        }
+        .testimonial-card {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+        }
+        .stats-counter {
+            font-variant-numeric: tabular-nums;
+        }
+        .nav-blur {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        /* Logo styling */
+        .logo-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <!-- LOGO -->
+                    <img src="sdp.png" alt="Logo SecurePro-Desk" class="logo-img">
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold text-white tracking-tight">SecurePro<span class="text-blue-400">-Desk</span></span>
+                        <span class="text-xs text-slate-400">Servicio Técnico Especializado</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#servicios" class="text-slate-300 hover:text-white transition-colors font-medium">Servicios</a>
+                    <a href="#proceso" class="text-slate-300 hover:text-white transition-colors font-medium">Proceso</a>
+                    <a href="#precios" class="text-slate-300 hover:text-white transition-colors font-medium">Precios</a>
+                    <a href="#testimonios" class="text-slate-300 hover:text-white transition-colors font-medium">Testimonios</a>
+                    <a href="#contacto" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30">
+                        Cotizar Ahora
+                    </a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 backdrop-blur-lg absolute w-full top-full left-0 border-t border-slate-800">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#servicios" class="block text-slate-300 hover:text-white py-2">Servicios</a>
+                <a href="#proceso" class="block text-slate-300 hover:text-white py-2">Proceso</a>
+                <a href="#precios" class="block text-slate-300 hover:text-white py-2">Precios</a>
+                <a href="#testimonios" class="block text-slate-300 hover:text-white py-2">Testimonios</a>
+                <a href="#contacto" class="block bg-blue-600 text-white text-center py-3 rounded-lg font-semibold">Cotizar Ahora</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-screen flex items-center relative overflow-hidden pt-32">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+            <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%233b82f6\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-slide-up">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold mb-6">
+                        <span class="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse"></span>
+                        Servicio Técnico Especializado
+                    </div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                        Reparación y <br>
+                        <span class="gradient-text">Mantenimiento</span><br>
+                        de Computadoras
+                    </h1>
+                    <p class="text-xl text-slate-400 mb-8 max-w-lg leading-relaxed">
+                        Soluciones rápidas y garantizadas para tu PC, laptop o Mac. Diagnóstico gratuito, repuestos originales y soporte técnico profesional.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contacto" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30 text-center">
+                            <i class="fas fa-calendar-check mr-2"></i>Agendar Servicio
+                        </a>
+                        <a href="#servicios" class="glass-effect text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:bg-white/10 text-center">
+                            <i class="fas fa-play-circle mr-2"></i>Ver Servicios
+                        </a>
+                    </div>
+                    
+                    <div class="mt-12 flex items-center gap-8">
+                        <div class="flex -space-x-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full border-2 border-slate-900" alt="Cliente">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full border-2 border-slate-900" alt="Cliente">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full border-2 border-slate-900" alt="Cliente">
+                            <div class="w-10 h-10 rounded-full border-2 border-slate-900 bg-blue-600 flex items-center justify-center text-white text-xs font-bold">+500</div>
+                        </div>
+                        <div class="text-slate-400 text-sm">
+                            <span class="text-white font-bold">500+</span> clientes satisfechos<br>con garantía real
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative lg:block hidden">
+                    <div class="relative animate-float">
+                        <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600&h=500&fit=crop" alt="Técnico reparando computadora" class="rounded-2xl shadow-2xl shadow-blue-500/20 relative z-10">
+                        <div class="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-xl z-20 animate-pulse-slow">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-slate-500">Reparación completada</p>
+                                    <p class="font-bold text-slate-800">¡Listo en 2 horas!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-6 -right-6 bg-blue-600 rounded-xl p-4 shadow-xl z-20">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-blue-200">Garantía</p>
+                                    <p class="font-bold text-white">90 días</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#stats" class="text-white/50 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="bg-slate-900 py-16 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="scroll-reveal">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 stats-counter" data-target="1500">0</div>
+                    <div class="text-blue-400 font-medium">Equipos Reparados</div>
+                </div>
+                <div class="scroll-reveal" style="transition-delay: 0.1s;">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 stats-counter" data-target="98">0</div>
+                    <div class="text-blue-400 font-medium">% Satisfacción</div>
+                </div>
+                <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 stats-counter" data-target="24">0</div>
+                    <div class="text-blue-400 font-medium">Horas Soporte</div>
+                </div>
+                <div class="scroll-reveal" style="transition-delay: 0.3s;">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 stats-counter" data-target="5">0</div>
+                    <div class="text-blue-400 font-medium">Años Experiencia</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Nuestros Servicios</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-3 mb-4">Soluciones Integrales para tu Equipo</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">Desde reparaciones de hardware hasta optimización de software, cubrimos todas tus necesidades tecnológicas con precios actualizados al mercado mexicano 2026.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1: Eliminación de Virus -->
+                <div class="bg-slate-50 rounded-2xl p-8 card-hover scroll-reveal border border-slate-100">
+                    <div class="w-16 h-16 service-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-virus-slash text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Eliminación de Virus</h3>
+                    <p class="text-slate-600 mb-4">Remoción completa de malware, spyware y ransomware. Instalación de antivirus profesional y configuración de firewall.</p>
+                    <ul class="space-y-2 text-sm text-slate-500 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Escaneo profundo</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Recuperación de datos</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Protección preventiva</li>
+                    </ul>
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+                        <span class="text-2xl font-bold text-blue-600">Desde $500</span>
+                        <span class="text-sm text-slate-400">1-2 horas</span>
+                    </div>
+                </div>
+
+                <!-- Service 2: Reparación de Hardware -->
+                <div class="bg-slate-50 rounded-2xl p-8 card-hover scroll-reveal border border-slate-100" style="transition-delay: 0.1s;">
+                    <div class="w-16 h-16 service-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-laptop-medical text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Reparación de Hardware</h3>
+                    <p class="text-slate-600 mb-4">Reemplazo de pantallas, teclados, baterías, discos duros y más. Usamos repuestos originales o de alta calidad.</p>
+                    <ul class="space-y-2 text-sm text-slate-500 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Piezas garantizadas</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Diagnóstico gratuito</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Todas las marcas</li>
+                    </ul>
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+                        <span class="text-2xl font-bold text-blue-600">Desde $700</span>
+                        <span class="text-sm text-slate-400">2-4 horas</span>
+                    </div>
+                </div>
+
+                <!-- Service 3: Optimización de Sistema -->
+                <div class="bg-slate-50 rounded-2xl p-8 card-hover scroll-reveal border border-slate-100" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 service-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-tachometer-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Optimización de Sistema</h3>
+                    <p class="text-slate-600 mb-4">Limpieza de archivos temporales, desfragmentación, actualización de drivers y optimización del arranque. Incluye cambio de pasta térmica.</p>
+                    <ul class="space-y-2 text-sm text-slate-500 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>+50% velocidad</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Limpieza física interna</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Actualizaciones</li>
+                    </ul>
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+                        <span class="text-2xl font-bold text-blue-600">Desde $850</span>
+                        <span class="text-sm text-slate-400">1-2 horas</span>
+                    </div>
+                </div>
+
+                <!-- Service 4: Recuperación de Datos -->
+                <div class="bg-slate-50 rounded-2xl p-8 card-hover scroll-reveal border border-slate-100">
+                    <div class="w-16 h-16 service-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-database text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Recuperación de Datos</h3>
+                    <p class="text-slate-600 mb-4">Recuperación de archivos borrados, formateados o de discos dañados. Laboratorio especializado para casos complejos.</p>
+                    <ul class="space-y-2 text-sm text-slate-500 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>90% tasa éxito</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Confidencialidad</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Sin datos, no pagas</li>
+                    </ul>
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+                        <span class="text-2xl font-bold text-blue-600">Desde $1,200</span>
+                        <span class="text-sm text-slate-400">24-72 hrs</span>
+                    </div>
+                </div>
+
+                <!-- Service 5: Redes y WiFi -->
+                <div class="bg-slate-50 rounded-2xl p-8 card-hover scroll-reveal border border-slate-100" style="transition-delay: 0.1s;">
+                    <div class="w-16 h-16 service-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-network-wired text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Redes y WiFi</h3>
+                    <p class="text-slate-600 mb-4">Configuración de redes domésticas y empresariales. Solución de problemas de conectividad y optimización de señal.</p>
+                    <ul class="space-y-2 text-sm text-slate-500 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Cobertura total</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Seguridad WPA3</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Soporte remoto</li>
+                    </ul>
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+                        <span class="text-2xl font-bold text-blue-600">Desde $800</span>
+                        <span class="text-sm text-slate-400">1-3 horas</span>
+                    </div>
+                </div>
+
+                <!-- Service 6: Mantenimiento Preventivo -->
+                <div class="bg-slate-50 rounded-2xl p-8 card-hover scroll-reveal border border-slate-100" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 service-icon rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-tools text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Mantenimiento Preventivo</h3>
+                    <p class="text-slate-600 mb-4">Planes mensuales o anuales para mantener tu equipo en óptimas condiciones y prevenir fallas futuras. Incluye póliza de servicio.</p>
+                    <ul class="space-y-2 text-sm text-slate-500 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Revisión mensual</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Backup automático</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Descuento en reparaciones</li>
+                    </ul>
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+                        <span class="text-2xl font-bold text-blue-600">Desde $400/mes</span>
+                        <span class="text-sm text-slate-400">Contrato anual</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="proceso" class="py-24 bg-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%233b82f6\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-blue-400 font-semibold text-sm uppercase tracking-wider">Cómo Trabajamos</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">Proceso Simple y Transparente</h2>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">Tres pasos para recuperar la funcionalidad de tu equipo sin complicaciones.</p>
+            </div>
+
+            <div class="relative">
+                <div class="process-line hidden md:block"></div>
+                
+                <div class="grid md:grid-cols-3 gap-12">
+                    <!-- Step 1 -->
+                    <div class="relative scroll-reveal">
+                        <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700 relative z-10">
+                            <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-6 mx-auto md:mx-0 shadow-lg shadow-blue-500/50">
+                                1
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 text-center md:text-left">Diagnóstico Gratuito</h3>
+                            <p class="text-slate-400 text-center md:text-left">Evaluamos tu equipo sin costo. Identificamos el problema exacto y te damos un presupuesto detallado antes de comenzar cualquier trabajo.</p>
+                            <div class="mt-6 flex items-center justify-center md:justify-start text-blue-400 text-sm font-semibold">
+                                <i class="fas fa-search mr-2"></i>15-30 minutos
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative scroll-reveal" style="transition-delay: 0.2s;">
+                        <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700 relative z-10">
+                            <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-6 mx-auto md:mx-0 shadow-lg shadow-blue-500/50">
+                                2
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 text-center md:text-left">Reparación Profesional</h3>
+                            <p class="text-slate-400 text-center md:text-left">Nuestros técnicos certificados realizan la reparación usando herramientas especializadas y repuestos de calidad garantizada.</p>
+                            <div class="mt-6 flex items-center justify-center md:justify-start text-blue-400 text-sm font-semibold">
+                                <i class="fas fa-wrench mr-2"></i>1-4 horas promedio
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative scroll-reveal" style="transition-delay: 0.4s;">
+                        <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700 relative z-10">
+                            <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-6 mx-auto md:mx-0 shadow-lg shadow-blue-500/50">
+                                3
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 text-center md:text-left">Entrega y Garantía</h3>
+                            <p class="text-slate-400 text-center md:text-left">Te entregamos tu equipo funcionando perfectamente con 90 días de garantía en todas nuestras reparaciones y repuestos.</p>
+                            <div class="mt-6 flex items-center justify-center md:justify-start text-blue-400 text-sm font-semibold">
+                                <i class="fas fa-shield-alt mr-2"></i>90 días de cobertura
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="precios" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Planes y Precios</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-3 mb-4">Elige tu Plan Ideal</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">Precios transparentes sin costos ocultos. Tarifas actualizadas al mercado mexicano 2026.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Basic Plan -->
+                <div class="bg-white rounded-2xl p-8 pricing-card shadow-lg border border-slate-200 scroll-reveal">
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Básico</h3>
+                        <p class="text-slate-500 text-sm">Para problemas puntuales</p>
+                        <div class="mt-6">
+                            <span class="text-5xl font-bold text-slate-900">$600</span>
+                            <span class="text-slate-500">/servicio</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Diagnóstico gratuito
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Limpieza de virus básica
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Optimización de sistema
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>30 días de garantía
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-times text-slate-300 mr-3"></i>Soporte remoto
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-times text-slate-300 mr-3"></i>Backup de datos
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('Básico')" class="w-full py-3 border-2 border-blue-600 text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+                        Seleccionar Plan
+                    </button>
+                </div>
+
+                <!-- Standard Plan -->
+                <div class="bg-white rounded-2xl p-8 pricing-card pricing-featured shadow-xl scroll-reveal" style="transition-delay: 0.1s;">
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Profesional</h3>
+                        <p class="text-slate-500 text-sm">El más solicitado</p>
+                        <div class="mt-6">
+                            <span class="text-5xl font-bold text-blue-600">$1,500</span>
+                            <span class="text-slate-500">/servicio</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Diagnóstico gratuito
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Reparación de hardware
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Instalación de software
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>60 días de garantía
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Soporte remoto incluido
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-times text-slate-300 mr-3"></i>Mantenimiento mensual
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('Profesional')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
+                        Seleccionar Plan
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-2xl p-8 pricing-card shadow-lg border border-slate-200 scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Empresarial</h3>
+                        <p class="text-slate-500 text-sm">Para negocios</p>
+                        <div class="mt-6">
+                            <span class="text-5xl font-bold text-slate-900">$2,500</span>
+                            <span class="text-slate-500">/mes</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Todo del plan Profesional
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Mantenimiento mensual
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Administración de red
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Backup automático
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>Soporte 24/7 prioritario
+                        </li>
+                        <li class="flex items-center text-slate-700">
+                            <i class="fas fa-check text-green-500 mr-3"></i>90 días de garantía
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('Empresarial')" class="w-full py-3 border-2 border-blue-600 text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+                        Seleccionar Plan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonios" class="py-24 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-blue-400 font-semibold text-sm uppercase tracking-wider">Testimonios</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">Lo que Dicen Nuestros Clientes</h2>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">Más de 500 clientes satisfechos confían en nosotros para mantener sus equipos funcionando.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card rounded-2xl p-8 border border-slate-700 scroll-reveal">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 mb-6 italic">"Repararon mi laptop en menos de 2 horas. El técnico fue muy profesional y explicó todo el proceso. ¡Definitivamente volveré!"</p>
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" class="w-12 h-12 rounded-full mr-4" alt="Carlos M.">
+                        <div>
+                            <h4 class="text-white font-bold">Carlos Mendoza</h4>
+                            <p class="text-slate-400 text-sm">Diseñador Gráfico</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card rounded-2xl p-8 border border-slate-700 scroll-reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 mb-6 italic">"Contratamos el plan empresarial para nuestra oficina. El soporte remoto es excelente y han reducido nuestros problemas técnicos en un 90%."</p>
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face" class="w-12 h-12 rounded-full mr-4" alt="Ana L.">
+                        <div>
+                            <h4 class="text-white font-bold">Ana Lucero</h4>
+                            <p class="text-slate-400 text-sm">CEO, TechStart Inc.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card rounded-2xl p-8 border border-slate-700 scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 mb-6 italic">"Recuperaron todos mis datos de un disco duro dañado. Pensé que los había perdido para siempre. Servicio impecable y muy confiable."</p>
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" class="w-12 h-12 rounded-full mr-4" alt="Roberto S.">
+                        <div>
+                            <h4 class="text-white font-bold">Roberto Sánchez</h4>
+                            <p class="text-slate-400 text-sm">Abogado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="mt-16 flex flex-wrap justify-center items-center gap-8 opacity-50">
+                <div class="flex items-center space-x-2 text-slate-400">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                    <span class="font-semibold">Garantía 90 días</span>
+                </div>
+                <div class="flex items-center space-x-2 text-slate-400">
+                    <i class="fas fa-lock text-2xl"></i>
+                    <span class="font-semibold">Datos Seguros</span>
+                </div>
+                <div class="flex items-center space-x-2 text-slate-400">
+                    <i class="fas fa-certificate text-2xl"></i>
+                    <span class="font-semibold">Técnicos Certificados</span>
+                </div>
+                <div class="flex items-center space-x-2 text-slate-400">
+                    <i class="fas fa-clock text-2xl"></i>
+                    <span class="font-semibold">Servicio Express</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-br from-blue-600 to-blue-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 scroll-reveal">¿Problemas con tu Computadora?</h2>
+            <p class="text-xl text-blue-100 mb-10 scroll-reveal">No esperes más. Agenda tu diagnóstico gratuito hoy mismo y recupera la productividad de tu equipo.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center scroll-reveal">
+                <a href="https://wa.me/525614548897" target="_blank" class="bg-white text-blue-700 px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition-all transform hover:scale-105 shadow-xl">
+                    <i class="fab fa-whatsapp mr-2"></i>Contactar por WhatsApp
+                </a>
+                <a href="tel:+525614548897" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-all">
+                    <i class="fas fa-phone mr-2"></i>Llamar Ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div class="scroll-reveal">
+                    <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Contacto</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-3 mb-6">Estamos Aquí para Ayudarte</h2>
+                    <p class="text-lg text-slate-600 mb-8">Contáctanos por cualquier medio. Respondemos en menos de 30 minutos durante horario laboral.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Ubicación</h4>
+                                <p class="text-slate-600">Ciudad de México, CDMX<br>Servicio a domicilio disponible</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-phone text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Teléfono</h4>
+                                <p class="text-slate-600">56 1454 8897<br>Lun-Vie: 10:00 - 17:00, Sáb: 10:00 - 14:00</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-envelope text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Email</h4>
+                                <p class="text-slate-600">soporte.att.abo84@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 flex space-x-4">
+                        <a href="#" class="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white hover:bg-blue-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white hover:bg-pink-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/525614548897" target="_blank" class="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white hover:bg-green-500 transition-colors">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 scroll-reveal">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-6">Solicitar Cotización</h3>
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Nombre</label>
+                                <input type="text" id="formNombre" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all" placeholder="Tu nombre">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Teléfono</label>
+                                <input type="tel" id="formTelefono" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all" placeholder="55 1234 5678">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                            <input type="email" id="formEmail" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all" placeholder="correo@ejemplo.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Tipo de Servicio</label>
+                            <select id="serviceSelect" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all">
+                                <option value="">Selecciona un servicio</option>
+                                <option value="virus">Eliminación de Virus ($500-$800)</option>
+                                <option value="hardware">Reparación de Hardware ($700-$2,000)</option>
+                                <option value="optimizacion">Optimización de Sistema ($850-$1,200)</option>
+                                <option value="datos">Recuperación de Datos ($1,200-$3,000)</option>
+                                <option value="redes">Redes y WiFi ($800-$1,500)</option>
+                                <option value="mantenimiento">Mantenimiento Preventivo ($400/mes)</option>
+                                <option value="otro">Otro / Cotización personalizada</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Descripción del Problema</label>
+                            <textarea id="formDescripcion" rows="4" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none" placeholder="Describe los síntomas o problemas que presenta tu equipo..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-500/30">
+                            <i class="fab fa-whatsapp mr-2"></i>Enviar Cotización por WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-microchip text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">SecurePro<span class="text-blue-400">-Desk</span></span>
+                    </div>
+                    <p class="text-sm leading-relaxed max-w-sm">Servicio técnico especializado en reparación y mantenimiento de equipos de computación. Tecnología de confianza para tu tranquilidad.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Servicios</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#servicios" class="hover:text-blue-400 transition-colors">Reparación de Hardware</a></li>
+                        <li><a href="#servicios" class="hover:text-blue-400 transition-colors">Eliminación de Virus</a></li>
+                        <li><a href="#servicios" class="hover:text-blue-400 transition-colors">Recuperación de Datos</a></li>
+                        <li><a href="#servicios" class="hover:text-blue-400 transition-colors">Mantenimiento</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Términos de Servicio</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Política de Privacidad</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Garantía</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm"> 2024 SecurePro-Desk. Todos los derechos reservados.</p>
+                <p class="text-sm mt-2 md:mt-0">Hecho con <i class="fas fa-heart text-red-500 mx-1"></i> para tu tecnología</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/525614548897" target="_blank" class="fixed bottom-6 right-6 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:scale-110 transition-transform z-50 animate-bounce" style="animation-duration: 3s;">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-blur', 'shadow-lg');
+                navbar.classList.remove('py-4');
+                navbar.classList.add('py-2');
+            } else {
+                navbar.classList.remove('nav-blur', 'shadow-lg');
+                navbar.classList.remove('py-2');
+                navbar.classList.add('py-4');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Trigger counter animation if it's a stats counter
+                    if (entry.target.querySelector('.stats-counter')) {
+                        animateCounters(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // Counter animation
+        function animateCounters(container) {
+            const counters = container.querySelectorAll('.stats-counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target + (target === 98 ? '%' : target === 24 ? '/7' : target === 5 ? '+' : '+');
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // Plan selection
+        function selectPlan(planName) {
+            const select = document.getElementById('serviceSelect');
+            const planMap = {
+                'Básico': 'virus',
+                'Profesional': 'hardware',
+                'Empresarial': 'mantenimiento'
+            };
+            
+            if (select && planMap[planName]) {
+                select.value = planMap[planName];
+            }
+            
+            document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+            showNotification(`Has seleccionado el plan ${planName}. Completa tus datos para continuar.`);
+        }
+
+        // WhatsApp Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('formNombre').value;
+            const telefono = document.getElementById('formTelefono').value;
+            const email = document.getElementById('formEmail').value;
+            const servicio = document.getElementById('serviceSelect');
+            const servicioText = servicio.options[servicio.selectedIndex].text;
+            const descripcion = document.getElementById('formDescripcion').value;
+            
+            const message = `*Nueva Cotización - SecurePro-Desk*%0A%0A` +
+                `*Nombre:* ${nombre}%0A` +
+                `*Teléfono:* ${telefono}%0A` +
+                `*Email:* ${email}%0A` +
+                `*Servicio:* ${servicioText}%0A` +
+                `*Descripción:* ${descripcion}%0A%0A` +
+                `Por favor envíenme información y disponibilidad. ¡Gracias!`;
+            
+            const whatsappUrl = `https://wa.me/525614548897?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            
+            showNotification('¡Redirigiendo a WhatsApp! Tu cotización está lista para enviar.');
+        });
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-24 right-4 bg-slate-900 text-white px-6 py-4 rounded-xl shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l-4 border-blue-500 max-w-sm';
+            notification.innerHTML = `
+                <div class="flex items-start">
+                    <i class="fas fa-info-circle text-blue-400 mt-1 mr-3"></i>
+                    <div>
+                        <p class="font-semibold text-sm">${message}</p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.remove('translate-x-full'), 100);
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-gradient');
+            if (hero) {
+                hero.style.backgroundPositionY = -(scrolled * 0.5) + 'px';
+            }
+        });
+    </script>
+</body>
+</html>
